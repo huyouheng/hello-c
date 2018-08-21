@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,11 +58,17 @@
         .button-collapse .fa-navicon {
             font-size: 25px;
         }
+        .category .number {
+            border: 1px solid #b0c1ff;
+            border-radius: 50px;
+            padding: 3px;
+            color: #5f58b3;
+        }
     </style>
 </head>
 <body>
 @include('components.menu')
-<main>
+<main id="pjax-container">
     @include('components.slide')
     <div class="container main-container">
         <div class="row">
@@ -73,8 +79,19 @@
                 @include('components.article',['id'=>3])
 
             </div>
-            <div class="col offset-m1 m4 offset-l1 l4 hide-on-small-only" style="background: #b0c4e8;height: 200px;">
-                120
+            <div class="col offset-m1 m4 offset-l1 l4 hide-on-small-only" style="background: #fff;height: auto;">
+                @include('components.one-world')
+                @include('components.category',['categories' => ['title'=>'蔬菜', 'lists'=>[
+                    ['name'=>'李四','number'=>12],
+                    ['name'=>'李四','number'=>112],
+                    ['name'=>'李四','number'=>12],
+                    ['name'=>'李四','number'=>12],
+                    ['name'=>'李四','number'=>1212],
+                    ['name'=>'李四','number'=>1212],
+                    ['name'=>'李四','number'=>12],
+                    ['name'=>'李四','number'=>12],
+                ]]])
+                @include('components.host-article')
             </div>
         </div>
     </div>
@@ -99,19 +116,9 @@
         $(".button-collapse").sideNav();
 
         //滚动监听
-        $('.scrollspy').scrollSpy();
-
-        // var options = [
-        //     {selector: '#article-panel', offset: 50, callback: function(el) {
-        //         Materialize.toast("This is our ScrollFire Demo!", 1500 );
-        //     } },
-        //     {selector: '#article-panel', offset: 400, callback: function(el) {
-        //         Materialize.toast("400 Demo!", 1500 );
-        //         Materialize.showStaggeredList($(el));
-        //     } },
-        // ];
-        //
-        // Materialize.scrollFire(options);
+        $('.scrollspy').scrollSpy({
+            scrollOffset: 500
+        });
 
         $("#modal").iziModal({
             title: 'aaaaaaaaa',
@@ -165,7 +172,7 @@
                     var subtitle = '作者: 小胡  时间: 2018-12-02';
                     $('.iziModal-header .iziModal-header-subtitle').html(subtitle);
 
-                },2000)
+                },1000)
             },
             onClosed: function (){
                 $('.iziModal-header .iziModal-header-title').html('玩命加载中...');
